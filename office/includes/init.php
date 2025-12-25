@@ -13,7 +13,7 @@ ini_set('display_errors', 1);
 // -----------------------------------------------------
 // 🔌 DATABASE
 // -----------------------------------------------------
-$host = 'localhost';
+$host = '185.104.29.236';
 $user = 'abcbrand';
 $pass = 'Admin@7819';
 $db   = 'abcbrand_officeadmin';
