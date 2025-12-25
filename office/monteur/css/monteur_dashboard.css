@@ -1,0 +1,156 @@
+/* ========================================
+   MONTEUR DASHBOARD - UI STYLING
+======================================== */
+
+/* Grid voor dashboard kaarten */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+/* Dashboard kaart */
+.dashboard-card {
+    background: #ffffff;
+    color: #222; /* FIX: geen witte tekst */
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: transform .15s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-3px);
+}
+
+.dashboard-card h4 {
+    margin: 0;
+    font-size: 16px;
+    color: #333; /* FIX */
+}
+
+.dashboard-card .value {
+    font-size: 32px;
+    font-weight: bold;
+    margin-top: 8px;
+    color: #2954cc;
+}
+
+/* Titel van secties */
+.section-title {
+    margin-top: 30px;
+    font-size: 20px;
+    color: #333; /* FIX */
+    border-left: 4px solid #2954cc;
+    padding-left: 8px;
+}
+
+/* Werkbon-lijst */
+.wb-list {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.wb-item {
+    background: #ffffff;
+    color: #222; /* FIX */
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.wb-item:hover {
+    background: #eef3ff;
+}
+
+.wb-item .title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #222; /* FIX */
+}
+
+.wb-item .sub {
+    color: #555; /* FIX */
+    margin-top: 3px;
+}
+
+/* Status label */
+.monteur-status {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 5px;
+    color: #fff;
+}
+
+/* Status kleuren */
+.status-onderweg   { background: #0ea5e9; }
+.status-oplocatie  { background: #22c55e; }
+.status-gereed     { background: #7c3aed; }
+.status-default    { background: #6b7280; }
+
+/* Kleurkaarten (planner stijl) */
+.card {
+    padding: 18px;
+    border-radius: 12px;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+}
+
+.card i { font-size: 26px; opacity: 0.9; }
+.card h3 { margin: 0; font-size: 26px; font-weight: bold; }
+.card p { margin: 0; font-size: 14px; opacity: 0.9; }
+
+.card-blue  { background:#2563eb; }
+.card-green { background:#22c55e; }
+.card-orange{ background:#f59e0b; }
+.card-purple{ background:#7c3aed; }
+
+/* Geen items */
+.no-items {
+    padding: 15px;
+    font-style: italic;
+    color: #777;
+}
+
+/* Mobiel */
+@media(max-width:650px){
+    .dashboard-grid {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    }
+}
+
+/* ===============================
+   DARK MODE FIXES (GEOPTIMALISEERD)
+================================ */
+
+.dark-mode .dashboard-card,
+.dark-mode .wb-item {
+    background: #1f2937;
+    border-color: #374151;
+    color: #e5e7eb;
+}
+
+.dark-mode .dashboard-card h4,
+.dark-mode .dashboard-card .value,
+.dark-mode .wb-item .title,
+.dark-mode .wb-item .sub {
+    color: #e5e7eb !important;
+}
+
+.dark-mode .section-title {
+    color: #e5e7eb;
+}

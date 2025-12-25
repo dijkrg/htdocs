@@ -1,0 +1,320 @@
+/* ============ Global ============ */
+body{
+  margin:0;
+  background:#f1f5f9;
+  font-family:Arial, sans-serif;
+}
+
+/* ============ Header (oude planning/kaart) ============ */
+.monteur-header{
+  background:#2954cc;
+  padding:15px;
+  color:#fff;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.logout i{color:#fff;font-size:22px}
+
+/* ============ Dag blokken ============ */
+.day-block{
+  background:#fff;
+  margin:12px;
+  padding:12px;
+  border-radius:10px;
+  box-shadow:0 3px 12px rgba(0,0,0,0.08);
+}
+.day-title{
+  font-size:18px;
+  margin:0 0 10px 0;
+  font-weight:700;
+}
+
+/* ============ Werkbon kaart ============ */
+.werkbon{
+  padding:12px;
+  background:#eef2ff;
+  border-left:6px solid #2954cc;
+  border-radius:8px;
+  margin-bottom:10px;
+}
+.werkbon h4{margin:0 0 6px 0}
+.werkbon .meta{font-size:14px;color:#444}
+
+/* ============ Status knoppen (oude module) ============ */
+.status-buttons{
+  margin-top:10px;
+  display:flex;
+  gap:8px;
+}
+.status-buttons button{
+  flex:1;
+  padding:10px 0;
+  border:none;
+  border-radius:6px;
+  color:#fff;
+  font-weight:700;
+  cursor:pointer;
+}
+.btn-onderweg{background:#0ea5e9}
+.btn-oplocatie{background:#22c55e}
+.btn-gereed{background:#7c3aed}
+
+/* =========================================================
+   OBJECT DETAIL – FORM GRID (row-1 / row-2 / row-3)
+   Gebruik in HTML:
+   <form class="obj-form">
+     <div class="row-1">...</div>
+     <div class="row-2">...</div>
+     <div class="row-3">...</div>
+   </form>
+   ========================================================= */
+.obj-form{
+  display:grid;
+  gap:12px;
+}
+
+/* 1 kolom */
+.obj-form .row-1{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:12px;
+}
+
+/* 2 kolommen */
+.obj-form .row-2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+/* 3 kolommen */
+.obj-form .row-3{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:12px;
+}
+
+/* Mobiel: alles onder elkaar */
+@media (max-width:640px){
+  .obj-form .row-2,
+  .obj-form .row-3{
+    grid-template-columns:1fr;
+  }
+}
+
+/* =========================================================
+   CHECKBOXES – links + niet wrappen
+   Gebruik:
+   <div class="obj-checks"><label>...</label></div>
+   ========================================================= */
+.obj-form .obj-checks{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  align-items:flex-start;
+}
+
+.obj-form .obj-checks label{
+  display:inline-flex;      /* inline-flex voorkomt rare breedtes */
+  align-items:center;
+  justify-content:flex-start;
+  gap:8px;
+
+  font-weight:600;
+  white-space:nowrap;       /* ✅ niet wrappen */
+  word-break:keep-all;
+
+  margin:0;
+  padding:4px 0;
+}
+
+.obj-form .obj-checks input[type="checkbox"]{
+  margin:0;
+}
+
+/* =========================================================
+   HEADER ACTION BUTTONS – gelijk formaat naast elkaar
+   (bijv. Opslaan/Annuleren rechtsboven)
+   ========================================================= */
+.header-actions .btn{
+  padding:10px 16px;
+  font-size:15px;
+  line-height:1.2;
+  min-height:42px;
+  display:inline-flex;
+  align-items:center;
+}
+
+/* Optioneel: rechts uitlijnen container (als je dat wil) */
+.header-actions.header-right{
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+  align-items:center;
+}
+
+/* === Werkbon actie menu (3 puntjes) === */
+.wb-list-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.wb-left {
+  flex: 1;
+}
+
+.wb-actions {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+}
+
+.btn-kebab {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 6px;
+  color: #555;
+}
+
+.btn-kebab:hover {
+  color: #2954cc;
+}
+
+.wb-menu {
+  position: absolute;
+  right: 0;
+  top: 28px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  display: none;
+  min-width: 160px;
+  z-index: 50;
+}
+
+.wb-menu.open {
+  display: block;
+}
+
+.wb-menu a {
+  display: block;
+  padding: 10px 14px;
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+}
+
+.wb-menu a:hover {
+  background: #f3f4f6;
+}
+
+.wb-menu a i, .wb-menu-disabled i{
+  width: 18px;
+  text-align: center;
+  margin-right: 8px;
+}
+
+.wb-menu-disabled{
+  display:block;
+  padding: 10px 14px;
+  color:#9ca3af;
+  font-size:14px;
+  cursor:not-allowed;
+}
+
+/* =================================================
+   Planning datum navigatie – stabiele styling
+   ================================================= */
+
+/* container */
+.planning-nav{
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+
+    margin: 0 auto 16px auto;
+    padding: 6px 10px;
+
+    width: auto !important;        /* ⬅️ nooit full width */
+}
+
+/* datum */
+.planning-date{
+    font-weight: 600;
+    font-size: 15px;
+    white-space: nowrap;
+}
+
+/* ◀ ▶ knoppen: klein & tekst-achtig */
+.planning-nav .nav-btn{
+    all: unset;                    /* ⬅️ reset ALLE oude button styles */
+    cursor: pointer;
+    font-size: 15px;               /* ⬅️ zelfde als datum */
+    line-height: 1;
+    padding: 2px 4px;
+    color: inherit;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* hover effect (subtiel) */
+.planning-nav .nav-btn:hover{
+    color: #2954cc;
+}
+
+/* focus (toegankelijk) */
+.planning-nav .nav-btn:focus-visible{
+    outline: 2px solid #2954cc;
+    outline-offset: 2px;
+}
+
+/* ✅ Kebab menu altijd boven alles (overlap fix) */
+.wb-menu--floating{
+  position: fixed !important;      /* super belangrijk */
+  z-index: 99999 !important;
+}
+
+/* Zorg dat kaarten geen rare stacking context veroorzaken */
+.wb-list,
+.wb-list-item,
+.wb-item,
+.card{
+  position: relative;
+  z-index: 1;
+}
+
+/* Als ergens overflow hidden staat op containers, dan kan dat menu “afsnijden”,
+   maar omdat we fixed op body gebruiken, maakt het minder uit. Toch netjes: */
+.wb-list,
+.planning-list,
+.page-section{
+  overflow: visible;
+}
+
+/* 3-puntjes knop consistent */
+.wb-dots{
+  border: 1px solid rgba(0,0,0,0.12);
+  background: #fff;
+  border-radius: 10px;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+.wb-dots i{ font-size: 16px; }
+
+/* 🔧 Werkbongegevens: tekst meer naar links */
+.detail-table th{
+    width: 240px;
+    padding-right: 8px;
+}
+
+.detail-table td{
+    padding-left: 4px;   /* was 8px */
+}

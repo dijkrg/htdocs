@@ -1,0 +1,761 @@
+/* ==========================================
+   VARIABELEN (dark mode)
+========================================== */
+:root {
+    --m-bg: #f5f6f8;
+    --m-white: #ffffff;
+    --m-text: #333;
+    --m-primary: #2954cc;
+    --m-primary-hover: #1e3fa1;
+    --m-danger: #d32f2f;
+    --m-danger-hover: #b71c1c;
+    --m-card-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.dark-mode {
+    --m-bg: #1e1e1e;
+    --m-white: #2a2a2a;
+    --m-text: #e5e5e5;
+    --m-card-shadow: 0 2px 6px rgba(0,0,0,0.4);
+}
+
+/* ==========================================
+   BODY
+========================================== */
+body {
+    margin: 0;
+    padding: 0;
+    background: var(--m-bg);
+    font-family: Arial, sans-serif;
+    color: var(--m-text);
+}
+
+/* ==========================================
+   TOPBAR
+========================================== */
+.topbar {
+    height: 60px;
+    background: var(--m-white);
+    box-shadow: var(--m-card-shadow);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 900;
+}
+
+.topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-header {
+    height: 34px;
+}
+
+.hamburger{
+  display:none !important;
+  background:none;
+  border:none;
+  font-size:22px;
+  cursor:pointer;
+}
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.topbar-right i {
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.dark-toggle {
+    background: none;
+    border: none;
+    font-size: 20px;
+}
+
+/* ==========================================
+   LAYOUT
+========================================== */
+.layout {
+    display: flex;
+    margin-top: 60px; /* ruimte voor topbar */
+}
+
+/* ==========================================
+   SIDEBAR (monteur)
+========================================== */
+.monteur-sidebar {
+    width: 230px;
+    background: var(--m-white);
+    height: calc(100vh - 60px);
+    position: fixed;
+    top: 60px;
+    left: 0;
+    padding-top: 10px;
+    box-shadow: 2px 0 6px rgba(0,0,0,0.05);
+    overflow-y: auto;
+    z-index: 800;
+}
+
+.monteur-sidebar nav a {
+    display: block;
+    padding: 12px 18px;
+    font-size: 15px;
+    color: var(--m-text);
+}
+
+.monteur-sidebar nav a:hover {
+    background: #e6ecfa;
+}
+
+.monteur-sidebar nav a i {
+    width: 22px;
+}
+
+/* ==========================================
+   CONTENT
+========================================== */
+.monteur-content {
+    flex: 1;
+    margin-left: 230px;
+    padding: 20px;
+}
+
+/* ==========================================
+   CARDS
+========================================== */
+.card {
+    background: var(--m-white);
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 15px;
+    box-shadow: var(--m-card-shadow);
+}
+
+/* ==========================================
+   BUTTONS
+========================================== */
+.btn-primary {
+    background: var(--m-primary);
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+}
+.btn-primary:hover {
+    background: var(--m-primary-hover);
+}
+
+.btn-danger {
+    background: var(--m-danger);
+    color: white;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 14px;
+}
+.btn-danger:hover {
+    background: var(--m-danger-hover);
+}
+
+/* ==========================================
+   TABLES
+========================================== */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--m-white);
+    box-shadow: var(--m-card-shadow);
+}
+
+.data-table th,
+.data-table td {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
+
+.data-table th {
+    background: #f3f4f6;
+    font-weight: bold;
+}
+
+/* ==========================================
+   MONTEUR Minimalistische Dashboard
+========================================== */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.dashboard-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    text-align: center;
+}
+
+.dashboard-card i {
+    font-size: 26px;
+    color: #2954cc;
+    margin-bottom: 8px;
+}
+
+.dashboard-card h3 {
+    margin: 0;
+    font-size: 26px;
+    color: #222;
+}
+
+.dashboard-card p {
+    margin: 5px 0 0;
+    font-size: 14px;
+    color: #666;
+}
+
+/* ==========================================
+   LIST ITEMS (voor today/tomorrow)
+========================================== */
+.wb-item {
+    background: var(--m-white);
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    box-shadow: var(--m-card-shadow);
+}
+
+.wb-item strong {
+    font-size: 16px;
+}
+
+/* ==========================================
+   FORMS
+========================================== */
+input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    margin-bottom: 15px;
+    font-size: 15px;
+    background: var(--m-white);
+    color: var(--m-text);
+}
+
+textarea {
+    min-height: 90px;
+}
+
+/* ==========================================
+   FLASH
+========================================== */
+.flash {
+    background: #2954cc;
+    color: #fff;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    animation: fadeIn 0.3s ease;
+}
+
+.flash-error { background: #d32f2f; }
+.flash-success { background: #2e7d32; }
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* ==========================================
+   MONTEUR – WERKBON KAARTEN
+========================================== */
+
+.monteur-wb-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.monteur-wb-card {
+    background: var(--card-bg, #fff);
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    transition: transform .15s ease, box-shadow .15s ease;
+    cursor: pointer;
+}
+
+.monteur-wb-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.12);
+}
+
+.wb-top {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: var(--text-color);
+}
+
+.wb-body p {
+    margin: 4px 0;
+    font-size: 15px;
+    color: var(--text-color);
+}
+
+.wb-time {
+    color: #2954cc;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.wb-footer {
+    margin-top: 8px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.wb-status {
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #fff;
+}
+
+/* Status kleuren */
+.status-onderweg { background: #2954cc; }
+.status-op-locatie { background: #28a745; }
+.status-gereed { background: #ff9800; }
+.status-onbekend { background:#999; }
+
+/* Gereed badge */
+.wb-gereed {
+    background: #28a745;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #fff;
+}
+
+/* ==========================================
+   MONTEUR UITBREIDING
+========================================== */
+/* WERKBON DETAIL */
+
+.wb-info-row {
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.wb-status-container {
+    margin-top: 10px;
+}
+
+.wb-status-badge {
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: bold;
+    color:#fff;
+}
+
+.status-onderweg { background:#2954cc; }
+.status-op_locatie { background:#28a745; }
+.status-gereed { background:#ff9800; }
+.status-onbekend { background:#999; }
+
+.monteur-status-btns {
+    margin-top: 12px;
+    display: flex;
+    gap: 10px;
+}
+
+.status-btn {
+    flex: 1;
+    padding: 10px;
+    background:#2954cc;
+    border:none;
+    border-radius:8px;
+    color:white;
+    font-size:15px;
+}
+
+.status-btn:active {
+    background:#1e3a8a;
+}
+
+.wb-toggle-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.wb-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.wb-list-item {
+    background:#f7f7f7;
+    padding:12px;
+    border-radius:10px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+/* ==========================================
+   MONTEUR MIJN UREN
+========================================== */
+.week-filter-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 100px;
+    gap: 12px;
+}
+
+.uren-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top:15px;
+}
+
+.uren-item {
+    background:#f8f8f8;
+    border-radius:10px;
+    padding:12px;
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+}
+
+.uren-item-left {
+    flex:1;
+}
+
+.uren-date {
+    font-weight:bold;
+    margin-bottom:3px;
+}
+
+.uren-time {
+    color:#2954cc;
+    font-weight:bold;
+}
+
+.uren-type {
+    margin-top:4px;
+    font-size:14px;
+}
+
+.uren-desc {
+    margin-top:6px;
+    color:#555;
+    font-size:13px;
+}
+
+.uren-duration {
+    margin-top:4px;
+    font-weight:bold;
+    font-size:14px;
+}
+
+.uren-actions {
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.btn-icon {
+    background:#2954cc;
+    width:38px;
+    height:38px;
+    border-radius:8px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+}
+
+.btn-icon-danger {
+    background:#d62828;
+}
+
+.uren-total {
+    margin-top:15px;
+    font-size:16px;
+    font-weight:bold;
+    text-align:right;
+}
+
+/* ==========================================
+   MONTEUR MIJN UREN - TOEVOEGEN
+========================================== */
+/* Uren pagina – form layout */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.form-grid .full {
+    grid-column: span 2;
+}
+
+.duur-preview {
+    margin-top: -5px;
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
+}
+
+/* ==========================================
+   MONTEUR Werkbonlijst
+========================================== */
+.wb-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.wb-item {
+    background: #fff;
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    cursor: pointer;
+    transition: transform .15s ease;
+}
+.wb-item:hover {
+    transform: translateY(-2px);
+}
+
+.wb-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #222;
+    margin-bottom: 6px;
+}
+
+.wb-sub {
+    font-size: 14px;
+    color: #666;
+}
+
+.wb-meta {
+    margin-top: 8px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #777;
+}
+
+/* Status badge */
+.status-bdg {
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.status-open { background:#2954cc; }
+.status-onderweg { background:#007bff; }
+.status-op_locatie { background:#28a745; }
+.status-gereed { background:#ff9800; }
+.status-afgerond { background:#555; }
+
+/* ==========================================
+   MONTEUR Detailpagina
+========================================== */
+.info-row {
+    display:flex;
+    justify-content:space-between;
+    padding:4px 0;
+    font-size:14px;
+    color:#333;
+}
+
+.item-list {
+    list-style:none;
+    padding:0;
+    margin:0;
+}
+.item-list li {
+    padding:8px 0;
+    border-bottom:1px solid #eee;
+}
+
+.status-buttons {
+    display:flex;
+    gap:10px;
+    margin-bottom:10px;
+}
+.status-btn {
+    flex:1;
+    padding:10px;
+    border:none;
+    border-radius:8px;
+    background:#e5e5e5;
+    font-size:14px;
+}
+.status-btn.active {
+    background:#2954cc;
+    color:white;
+}
+
+.btn-block {
+    width:100%;
+    margin:10px 0;
+}
+
+/* ==========================================
+   MONTEUR Uren Cards
+========================================== */
+.uren-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.uren-card {
+    background: white;
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+.uren-header {
+    font-size: 15px;
+    margin-bottom: 8px;
+}
+
+.uren-header span {
+    color: #666;
+    font-size: 13px;
+}
+
+.uren-times {
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.duur {
+    float:right;
+    font-weight:bold;
+    color:#2954cc;
+}
+
+.uren-actions {
+    display:flex;
+    gap:14px;
+    justify-content:flex-end;
+}
+
+.week-filter-grid {
+    display:grid;
+    grid-template-columns:1fr 1fr auto;
+    gap:12px;
+}
+
+.btn-block {
+    width:100%;
+    margin-top:20px;
+}
+
+/* ==========================================
+   MONTEUR - planning cards
+========================================== */
+.planning-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.wb-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.wb-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 10px;
+    background: #f9fafb;
+    border-radius: 10px;
+    padding: 12px 14px;
+    border: 1px solid #e5e7eb;
+}
+
+.wb-title {
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.wb-info {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 4px;
+}
+
+.wb-info i {
+    color: #2954cc;
+}
+
+.empty-msg {
+    font-style: italic;
+    color: #777;
+    margin-top: 10px;
+}
+
+/* ================================
+   FIX: kebab-menu altijd bovenaan
+   ================================ */
+
+/* elke werkbon kaart mag het menu niet clippen */
+.wb-list-item{
+  position: relative !important;
+  z-index: 0 !important;
+  overflow: visible !important;
+}
+
+/* als menu open is, deze kaart boven de rest */
+.wb-list-item.menu-open{
+  z-index: 9999 !important;
+}
+
+/* actiekolom blijft referentiepunt */
+.wb-actions{
+  position: relative !important;
+  overflow: visible !important;
+}
+
+/* het menu zelf: altijd boven alles */
+.wb-menu{
+  z-index: 99999 !important;
+}

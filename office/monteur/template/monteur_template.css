@@ -1,0 +1,144 @@
+/* ============================
+   📦 WERKBON KAART WEERGAVE
+============================ */
+
+.wb-grid {
+    display: grid;
+    gap: 15px;
+}
+
+.wb-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: transform .15s ease, box-shadow .2s ease;
+}
+
+.wb-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.wb-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.wb-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.wb-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    color: #555;
+}
+
+.wb-actions {
+    margin-top: 12px;
+    display: flex;
+    gap: 10px;
+}
+
+.btn-small {
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+}
+
+/* Kleuren */
+.btn-blue   { background:#2954cc; }
+.btn-green  { background:#28a745; }
+.btn-orange { background:#ff9800; }
+
+/* Status-badges */
+.wb-badge {
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.wb-badge.blauw  { background:#2954cc; }
+.wb-badge.groen  { background:#28a745; }
+.wb-badge.oranje { background:#ff9800; }
+.wb-badge.grijs  { background:#777; }
+
+/* ============================
+   📦 WERKBON DETAIL
+============================ */
+.wb-detail-card {
+    background:#fff;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.1);
+    margin-bottom:20px;
+}
+
+.wb-detail-header {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:10px;
+}
+
+.wb-detail-info {
+    margin-bottom:10px;
+    color:#555;
+}
+
+.wb-detail-info i {
+    width:20px;
+    color:#2954cc;
+}
+
+.status-actions {
+    display:flex;
+    gap:10px;
+    margin-top:15px;
+}
+
+.wb-section {
+    background:#fff;
+    padding:15px;
+    border-radius:12px;
+    box-shadow:0 2px 6px rgba(0,0,0,.08);
+    margin-bottom:20px;
+}
+
+.wb-section-header {
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:10px;
+}
+
+.wb-list {
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.wb-list-item {
+    display:flex;
+    justify-content:space-between;
+    background:#f9f9f9;
+    padding:12px;
+    border-radius:8px;
+}
+
+.empty-msg {
+    color:#777;
+    font-style:italic;
+}

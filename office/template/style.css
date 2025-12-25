@@ -1,0 +1,349 @@
+/* =====================================================================
+   🔵 ABCB UI 3.0 — COMPLETE CLEANED & UPGRADED STYLE.CSS
+   ===================================================================== */
+
+/* ------------------------------------------------------------
+   BASIS
+------------------------------------------------------------ */
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: var(--bg-color);
+    color: var(--text-color);
+}
+
+a {
+    color: #2954cc;
+    text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+
+/* ------------------------------------------------------------
+   DARK MODE VARIABELEN
+------------------------------------------------------------ */
+:root {
+    --bg-color: #f9fafb;
+    --text-color: #333;
+    --sidebar-bg: #f3f4f6;
+    --sidebar-link: #333;
+    --sidebar-hover: #e2e8f0;
+    --topbar-bg: #f3f4f6;
+    --btn-primary: #2954cc;
+    --btn-primary-hover: #1e3a8a;
+}
+
+.dark-mode {
+    --bg-color: #1e1e1e;
+    --text-color: #ddd;
+    --sidebar-bg: #2d2d2d;
+    --sidebar-link: #ccc;
+    --sidebar-hover: #3a3a3a;
+    --topbar-bg: #111;
+    --btn-primary: #3b82f6;
+    --btn-primary-hover: #1d4ed8;
+}
+
+/* ------------------------------------------------------------
+   FLASH BERICHTEN
+------------------------------------------------------------ */
+.flash {
+    position: fixed;
+    top: 20px; right: 20px;
+    padding: 12px 18px;
+    border-radius: 6px;
+    font-size: 14px;
+    z-index: 9999;
+    color: #fff;
+    animation: fadein 0.3s ease;
+}
+.flash-success { background: #2e7d32; }
+.flash-error   { background: #d32f2f; }
+@keyframes fadein { from { opacity:0; } to { opacity:1; } }
+
+/* ------------------------------------------------------------
+   TOPBAR
+------------------------------------------------------------ */
+.topbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 68px;
+    background: var(--topbar-bg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 22px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+    z-index: 1000;
+}
+.logo-header { height: 42px; }
+
+/* ------------------------------------------------------------
+   SIDEBAR
+------------------------------------------------------------ */
+.sidebar {
+    position: fixed;
+    top: 68px;
+    left: 0;
+    width: 250px;
+    height: calc(100vh - 68px);
+    background: var(--sidebar-bg);
+    border-right: 1px solid #e5e7eb;
+    overflow-y: auto;
+    z-index: 900;
+}
+
+.sidebar nav a {
+    display: block;
+    padding: 12px 22px;
+    color: var(--sidebar-link);
+    font-size: 15px;
+}
+.sidebar nav a:hover { background: var(--sidebar-hover); }
+
+/* ------------------------------------------------------------
+   CONTENT
+------------------------------------------------------------ */
+.layout { display: flex; margin-top: 68px; }
+
+.content {
+    flex: 1;
+    margin-left: 250px;
+    padding: 20px 30px;
+    background: var(--bg-color);
+}
+
+/* ------------------------------------------------------------
+   PAGE HEADER
+------------------------------------------------------------ */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 10px;
+    border-bottom: 1px solid #e5e7eb;
+    margin-bottom: 15px;
+}
+.page-header h2 {
+    margin: 0;
+    font-size: 20px;
+}
+
+/* ------------------------------------------------------------
+   KNOPPEN
+------------------------------------------------------------ */
+.btn {
+    background: var(--btn-primary);
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.btn:hover { background: var(--btn-primary-hover); }
+
+.btn-secondary {
+    background: #6b7280;
+}
+.btn-secondary:hover { background: #4b5563; }
+
+.btn-danger {
+    background: #dc2626;
+}
+.btn-danger:hover { background: #b91c1c; }
+
+/* ------------------------------------------------------------
+   ACTIE ICONEN — ABCB STYLE (📄 ✏️ 💾 🗑)
+------------------------------------------------------------ */
+.action-icon {
+    background: transparent;
+    border: none;
+    padding: 7px;
+    cursor: pointer;
+    margin: 0 4px;
+    font-size: 18px !important;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform .15s, opacity .15s;
+}
+
+.action-icon i {
+    color: #555 !important;
+    font-size: 18px !important;
+}
+
+.action-icon:hover {
+    transform: scale(1.20);
+    opacity: 0.7;
+}
+
+.data-table td.actions .action-icon {
+    font-size: 18px !important;
+}
+
+/* 💾 Save-icon exact gelijk aan ✏️📄🗑 */
+.save-icon {
+    font-size: 18px !important;
+    vertical-align: middle;
+}
+
+/* ------------------------------------------------------------
+   TABELLEN
+------------------------------------------------------------ */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    margin-top: 15px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.data-table th, .data-table td {
+    padding: 10px 12px;
+    border: 1px solid #e5e7eb;
+    font-size: 14px;
+}
+
+.data-table th {
+    background: #f3f4f6;
+    font-weight: 600;
+}
+
+.data-table tr:nth-child(even) {
+    background: #fafafa;
+}
+
+.data-table td.actions {
+    text-align: center !important;
+    white-space: nowrap;
+}
+
+/* ------------------------------------------------------------
+   FORMULIEREN
+------------------------------------------------------------ */
+form label {
+    font-weight: bold;
+    margin-top: 10px;
+    display: inline-block;
+}
+form .form-row label {
+    display: block;
+}
+
+form input,
+form select,
+form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    background: #fff;
+    font-size: 14px;
+}
+
+/* ------------------------------------------------------------
+   CARD
+------------------------------------------------------------ */
+.card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+}
+
+/* ------------------------------------------------------------
+   POPUP
+------------------------------------------------------------ */
+.abcb-popup-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.abcb-popup {
+    background: #fff;
+    padding: 26px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 520px;
+}
+
+/* ------------------------------------------------------------
+   TOOLTIP
+------------------------------------------------------------ */
+[data-tooltip] { position: relative; }
+
+[data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.85);
+    color: #fff;
+    padding: 5px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    opacity: 0;
+    white-space: nowrap;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+[data-tooltip]:hover::after { opacity: 1; }
+
+/* ------------------------------------------------------------
+   STATUS BADGES
+------------------------------------------------------------ */
+.status-badge {
+    padding: 4px 10px;
+    font-size: 13px;
+    border-radius: 6px;
+    color: #fff;
+    display: inline-block;
+    min-width: 90px;
+    text-align: center;
+}
+
+.status-badge.groen  { background: #28a745; }
+.status-badge.oranje { background: #ff9800; }
+.status-badge.rood   { background: #dc3545; }
+
+/* ------------------------------------------------------------
+   SYSTEEMRECHTEN — TOGGLE ICONS
+------------------------------------------------------------ */
+.toggle-icon-wrap {
+    display: flex;
+    justify-content: center;
+}
+
+.toggle-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 6px;
+    background: #bdbdbd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: .2s;
+    color: #fff;
+    font-size: 16px;
+}
+
+.toggle-icon.on  { background:#2954cc; }
+.toggle-icon.off { background:#bdbdbd; }
+.toggle-icon i { pointer-events:none; }

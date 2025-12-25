@@ -1,0 +1,279 @@
+/* ============================================
+   📱 MONTEUR — MOBILE OPTIMALISATIE (< 640px)
+============================================ */
+@media (max-width: 640px) {
+
+    /* ------- URENLIJST ------- */
+    .uren-item {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        padding: 12px;
+    }
+
+    .uren-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+    }
+
+    /* ------- WEEKFILTER ------- */
+    .week-filter-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+
+    .week-filter-grid button {
+        grid-column: span 2;
+        width: 100%;
+    }
+
+    /* ------- FORMULIEREN ------- */
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr !important;
+        gap: 12px;
+    }
+
+    .form-grid .full {
+        grid-column: 1 !important;
+    }
+
+    /* ------- DASHBOARD CARDS ------- */
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* ------- TOPBAR GEBRUIK ------- */
+    .topbar {
+        padding: 0 14px;
+    }
+
+    .topbar-right span {
+        display: none; /* Naam verbergen → ruimte besparen */
+    }
+
+    /* ------- SIDEBAR ------- */
+    .monteur-sidebar {
+        width: 220px;
+    }
+
+    /* ------- WERKBON LIJST ------- */
+    .wb-item {
+        padding: 12px;
+        flex-direction: column;
+        gap: 6px;
+    }
+}
+
+/* ============================================
+   📘 OVERIGE MOBILE-FIRST ELEMENTEN
+============================================ */
+
+/* Urenoverzicht */
+.uren-flex {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.uren-box strong {
+    font-size: 22px;
+    color: #2954cc;
+    display: block;
+}
+
+/* Vandaag-Morgen widget */
+#todayTomorrowWidget div {
+    margin-bottom: 10px;
+}
+
+.tt-item {
+    padding: 8px 12px;
+    background: #f3f4f6;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+.tt-item strong {
+    display: block;
+    font-weight: 600;
+}
+
+/* ===================================================
+   📅 MONTEUR PLANNING MOBILE
+=================================================== */
+
+.planning-item {
+    margin-bottom: 12px;
+    padding: 14px;
+}
+
+.pi-top {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+.pi-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #2954cc;
+}
+
+.pi-sub {
+    font-size: 13px;
+    color: #666;
+}
+
+.pi-actions {
+    margin-top: 10px;
+    text-align: right;
+}
+
+.pi-actions .btn-small {
+    padding: 6px 10px;
+    font-size: 13px;
+}
+
+.planning-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    background: #fff;
+    padding: 10px 12px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,.08);
+}
+
+.nav-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: none;
+    background: #2954cc;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.nav-date {
+    text-align: center;
+    flex: 1;
+}
+
+#dateLabel {
+    font-weight: 600;
+    font-size: 15px;
+}
+
+#dateSub {
+    font-size: 12px;
+    color: #666;
+}
+
+/* Extra veilig op kleine schermen */
+@media (max-width: 420px) {
+    .nav-btn {
+        width: 38px;
+        height: 38px;
+    }
+}
+
+/* ===================================================
+   📅 MONTEUR - werkbon_view
+=================================================== */
+.wb-line {
+    display:flex;
+    justify-content:space-between;
+    padding:10px 0;
+    border-bottom:1px solid #e5e7eb;
+}
+
+.wb-status-buttons {
+    display:flex;
+    gap:10px;
+}
+
+.status-btn {
+    flex:1;
+    padding:10px;
+    border:none;
+    border-radius:8px;
+    background:#2954cc;
+    color:white;
+    font-size:15px;
+}
+
+.section-head {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:10px;
+}
+
+.empty {
+    color:#777;
+    padding:10px;
+}
+
+.line-actions {
+    display:flex;
+    gap:10px;
+}
+
+/* ===================================================
+   📅 MONTEUR - Agenda
+=================================================== */
+.agenda-item {
+    margin-bottom: 12px;
+}
+
+.agenda-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+.agenda-body {
+    margin-bottom: 10px;
+}
+
+.agenda-title {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.agenda-sub {
+    font-size: 13px;
+    color: #777;
+}
+
+.agenda-actions {
+    text-align: right;
+}
+
+.planning-filter-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    flex: 1;
+    min-width: 110px;
+}
+
+.filter-btn.active {
+    background: #2954cc;
+    color: #fff;
+}
+
+<link rel="stylesheet" href="/monteur/template/monteur.css?v=<?= filemtime(__DIR__ . '/monteur.css') ?>">
+

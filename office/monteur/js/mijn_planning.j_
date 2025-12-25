@@ -1,0 +1,266 @@
+// /monteur/js/mijn_planning.js
+document.addEventListener("DOMContentLoaded", () => {
+  const planningDiv = document.getElementById("planningList");
+  const prevBtn = document.getElementById("prevDay");
+  const nextBtn = document.getElementById("nextDay");
+  const dateLabel = document.getElementById("dateLabel");
+
+  const STORAGE_KEY = "abcb_monteur_planning_date";
+
+  function startOfDay(d) {
+    const x = new Date(d);
+    x.setHours(0, 0, 0, 0);
+    return x;
+  }
+
+  function isWeekend(d) {
+    const day = d.getDay(); // 0=zo, 6=za
+    return day === 0 || day === 6;
+  }
+
+  function nextWorkday(d, delta) {
+    const x = new Date(d);
+    do {
+      x.setDate(x.getDate() + delta);
+    } while (isWeekend(x));
+    return x;
+  }
+
+  function toNL(date) {
+    const d = String(date.getDate()).padStart(2, "0");
+    const m = String(date.getMonth() + 1).padStart(2, "0");
+    const y = date.getFullYear();
+    return `${d}-${m}-${y}`; // dd-mm-jjjj
+  }
+
+  // "Maandag 22-12-2025" (1 regel)
+  function toOneLineLabel(date) {
+    const weekday = date.toLocaleDateString("nl-NL", { weekday: "long" });
+    const niceWeekday = weekday.charAt(0).toUpperCase() + weekday.slice(1);
+    return `${niceWeekday} ${toNL(date)}`;
+  }
+
+  function formatTimeHM(time) {
+    if (!time) return "-";
+    return String(time).slice(0, 5);
+  }
+
+  function safe(v) {
+    return (v ?? "").toString();
+  }
+
+function telClean(t){
+  return safe(t).replace(/[^\d+]/g, ""); // +31 etc blijft
+}
+
+function hasAddr(wb, prefix){
+  // prefix: "werk" of "klant"
+  return !!(safe(wb[`${prefix}_adres`]).trim() || safe(wb[`${prefix}_postcode`]).trim() || safe(wb[`${prefix}_plaats`]).trim());
+}
+
+function addrLine(wb, prefix){
+  const a = safe(wb[`${prefix}_adres`]).trim();
+  const pc = safe(wb[`${prefix}_postcode`]).trim();
+  const p = safe(wb[`${prefix}_plaats`]).trim();
+  return [a, pc, p].filter(Boolean).join(" ");
+}
+
+function pickNavAddress(wb){
+  // ✅ werkadres eerst, anders klantadres (oude velden blijven ook ok)
+  if (hasAddr(wb, "werk")) return addrLine(wb, "werk");
+  // fallback naar bestaande velden (zoals jij nu al gebruikt)
+  const fallback = [safe(wb.adres), safe(wb.postcode), safe(wb.plaats)].filter(Boolean).join(" ").trim();
+  if (fallback) return fallback;
+  if (hasAddr(wb, "klant")) return addrLine(wb, "klant");
+  return "";
+}
+
+function pickPhone(wb){
+  // volgorde: contactpersoon -> klant -> fallback
+  const c = telClean(wb.contact_telefoon || wb.contactpersoon_telefoon || "");
+  if (c) return c;
+  const k = telClean(wb.klant_telefoon || wb.telefoon || "");
+  if (k) return k;
+  return "";
+}
+
+function buildRow(wb) {
+  const tijd =
+    wb.starttijd || wb.eindtijd
+      ? `${formatTimeHM(wb.starttijd)} – ${formatTimeHM(wb.eindtijd)}`
+      : "-";
+
+  // navigatie adres
+  const navAddr = pickNavAddress(wb);
+
+  // telefoon
+  const phone = pickPhone(wb);
+
+  // objecten: ga naar werkbon_view en spring naar objecten
+  const objectenUrl = `/monteur/werkbon_view.php?id=${wb.werkbon_id}#objecten`;
+
+  // bellen link (alleen als telefoon bekend is)
+  const callLink = phone ? `tel:${encodeURIComponent(phone)}` : "";
+
+  // navigeren links
+  // (Google Maps werkt overal; Apple Maps doet iOS automatisch vaak ook)
+  const navLink = navAddr
+    ? `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(navAddr)}`
+    : "";
+
+  return `
+    <div class="wb-list-item">
+      <div class="wb-left">
+        <div class="wb-title">Werkbon ${safe(wb.werkbonnummer)}</div>
+        <div class="wb-info">👤 ${safe(wb.klantnaam)}</div>
+        <div class="wb-info">📍 ${safe(wb.adres)} ${safe(wb.postcode)} ${safe(wb.plaats)}</div>
+        <div class="wb-info">🕒 ${tijd}</div>
+      </div>
+
+      <div class="wb-actions">
+        <button class="btn-kebab" type="button" onclick="toggleWbMenu(${wb.werkbon_id})" aria-label="Acties">
+          <i class="fa-solid fa-ellipsis-vertical"></i>
+        </button>
+
+        <div class="wb-menu" id="wb-menu-${wb.werkbon_id}">
+          <a href="/monteur/werkbon_detail.php?id=${wb.werkbon_id}">
+            <i class="fa-solid fa-circle-info"></i> Details
+          </a>
+
+          <a href="${objectenUrl}">
+            <i class="fa-solid fa-cubes"></i> Objecten
+          </a>
+
+          ${callLink ? `
+            <a href="${callLink}">
+              <i class="fa-solid fa-phone"></i> Bellen
+            </a>
+          ` : `
+            <div class="wb-menu-disabled">
+              <i class="fa-solid fa-phone"></i> Bellen (geen nummer)
+            </div>
+          `}
+
+          ${navLink ? `
+            <a href="${navLink}" target="_blank" rel="noopener">
+              <i class="fa-solid fa-location-arrow"></i> Navigeren
+            </a>
+          ` : `
+            <div class="wb-menu-disabled">
+              <i class="fa-solid fa-location-arrow"></i> Navigeren (geen adres)
+            </div>
+          `}
+
+          <a href="/monteur/uur_toevoegen.php?werkbon_id=${wb.werkbon_id}">
+            <i class="fa-solid fa-clock"></i> Uur toevoegen
+          </a>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+  function loadSavedDate() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return null;
+      const d = new Date(raw);
+      if (isNaN(d.getTime())) return null;
+      return d;
+    } catch {
+      return null;
+    }
+  }
+
+  function saveDate(d) {
+    try {
+      localStorage.setItem(STORAGE_KEY, startOfDay(d).toISOString());
+    } catch {}
+  }
+
+  // ✅ Start = opgeslagen datum of vandaag, maar nooit weekend
+  let currentDate = loadSavedDate() || new Date();
+  currentDate = startOfDay(currentDate);
+  if (isWeekend(currentDate)) currentDate = nextWorkday(currentDate, 1);
+  saveDate(currentDate);
+
+  async function loadPlanning() {
+    const datumNL = toNL(currentDate);
+
+    // ✅ Eén regel in de header
+    if (dateLabel) dateLabel.textContent = toOneLineLabel(currentDate);
+
+    planningDiv.innerHTML = "<p>⏳ Laden...</p>";
+
+    try {
+      const url = `/monteur/ajax_mijn_planning.php?datum=${encodeURIComponent(
+        datumNL
+      )}&_ts=${Date.now()}`;
+
+      const resp = await fetch(url, {
+        cache: "no-store",
+        credentials: "same-origin",
+        headers: { Accept: "application/json" }
+      });
+
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+      const payload = await resp.json();
+
+      if (!payload || payload.ok !== true) {
+        const msg = payload?.error ? ` (${payload.error})` : "";
+        planningDiv.innerHTML = `<p class="empty-msg">⚠ Fout bij laden${msg}</p>`;
+        return;
+      }
+
+      const items = Array.isArray(payload.items) ? payload.items : [];
+      if (items.length === 0) {
+        planningDiv.innerHTML = "<p class='empty-msg'>Geen werkbonnen.</p>";
+        return;
+      }
+
+      planningDiv.innerHTML = `<div class="wb-list">${items
+        .map(buildRow)
+        .join("")}</div>`;
+    } catch (e) {
+      console.error(e);
+      planningDiv.innerHTML = "<p class='empty-msg'>⚠ Fout bij laden</p>";
+    }
+  }
+
+  prevBtn?.addEventListener("click", () => {
+    currentDate = nextWorkday(currentDate, -1); // ✅ weekend overslaan
+    currentDate = startOfDay(currentDate);
+    saveDate(currentDate);
+    loadPlanning();
+  });
+
+  nextBtn?.addEventListener("click", () => {
+    currentDate = nextWorkday(currentDate, 1); // ✅ weekend overslaan
+    currentDate = startOfDay(currentDate);
+    saveDate(currentDate);
+    loadPlanning();
+  });
+
+  loadPlanning();
+});
+
+function toggleWbMenu(id) {
+  const menu = document.getElementById(`wb-menu-${id}`);
+  if (!menu) return;
+
+  // sluit andere menus
+  document.querySelectorAll(".wb-menu").forEach(m => {
+    if (m !== menu) m.classList.remove("open");
+  });
+
+  menu.classList.toggle("open");
+}
+
+// klik buiten menu = sluiten
+document.addEventListener("click", (e) => {
+  if (!e.target.closest(".wb-actions")) {
+    document.querySelectorAll(".wb-menu").forEach(m => m.classList.remove("open"));
+  }
+});
+
+

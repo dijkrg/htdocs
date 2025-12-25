@@ -1,0 +1,65 @@
+body {
+    margin: 0;
+    background: #f1f5f9;
+    font-family: Arial;
+}
+
+/* HEADER */
+.monteur-header {
+    background: #2954cc;
+    padding: 15px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.logout i { color: white; font-size: 22px; }
+
+/* DAG BLOKKEN */
+.day-block {
+    background: white;
+    margin: 12px;
+    padding: 12px;
+    border-radius: 10px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+}
+.day-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+/* WERKBONNE KAART */
+.werkbon {
+    padding: 12px;
+    background: #eef2ff;
+    border-left: 6px solid #2954cc;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+.werkbon h4 {
+    margin: 0 0 6px 0;
+}
+.werkbon .meta {
+    font-size: 14px;
+    color: #444;
+}
+
+/* STATUS KNOPPEN */
+.status-buttons {
+    margin-top: 10px;
+    display: flex;
+    gap: 8px;
+}
+.status-buttons button {
+    flex: 1;
+    padding: 10px 0;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+.btn-onderweg { background: #0ea5e9; }
+.btn-oplocatie { background: #22c55e; }
+.btn-gereed { background: #7c3aed; }

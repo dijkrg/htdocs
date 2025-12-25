@@ -1,0 +1,70 @@
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore log files and databases
+*.log
+*.sql
+*.sqlite
+*.db
+
+# Ignore temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# Ignore PHPStorm and VSCode project files
+.idea/
+.vscode/
+
+# Ignore node_modules and vendor directories
+node_modules/
+vendor/
+
+# Ignore composer files
+composer.lock
+
+# Ignore environment files
+.env
+.env.*
+
+# Ignore backup files
+Backup/
+
+# Ignore XAMPP and webalizer directories
+xampp/
+webalizer/
+
+# Ignore other unnecessary files
+*.bak
+*.old
+*.orig
+*.save
+*.~
+
+# Ignore cache files
+cache/
+*.cache
+
+# Ignore compiled files
+*.class
+*.pyc
+*.pyo
+*.exe
+*.dll
+*.so
+*.o
+*.out
+*.a
+*.lib
+*.obj
+*.pdb
+*.ilk
+*.idb
+*.exp
+
+# Ignore other user-specific files
+*.user
+*.sublime-workspace
+*.sublime-project
