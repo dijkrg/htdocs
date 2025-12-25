@@ -11,18 +11,22 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // Check omgeving
-$host = $_SERVER['HTTP_HOST'] ?? 'cli';
+$host = $_SERVER['HTTP_HOST'] ?? '';
 
 // Standaard database-gegevens
-$servername = "localhost";
-$dbname     = "abcbrand_officeadmin";
+$dbname = "abcbrand_officeadmin";
 
-if ($host === 'localhost' || $host === '127.0.0.1') {
-    // 🔹 Lokaal (XAMPP)
+// Bepaal of we lokaal of online draaien
+$isLocal = ($host === 'localhost' || $host === '127.0.0.1' || $host === '');
+
+if ($isLocal && getenv('USE_LOCAL_DB') === 'true') {
+    // 🔹 Lokaal (XAMPP) - alleen als expliciet ingesteld
+    $servername = "localhost";
     $username = "root";
     $password = "";
 } else {
-    // 🔹 Online server
+    // 🔹 Online server (standaard)
+    $servername = "185.104.29.236";
     $username = "abcbrand_officeadmin";
     $password = "Admin@7819";
 }
