@@ -17,18 +17,14 @@ $basePath = rtrim(str_replace(
     <meta charset="UTF-8">
     <title><?= htmlspecialchars($pageTitle ?? 'Office ABCB') ?></title>
     <link rel="stylesheet" href="<?= $basePath ?>/template/style.css">
-    <link rel="icon" href="/template/favicon.ico">
-    <link rel="apple-touch-icon" href="/template/ABCBFAV.png">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<link rel="manifest" href="/manifest.json">
-<script>
-if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("/service-worker.js");
-}
-</script>
+    <link rel="icon" href="<?= $basePath ?>/template/favicon.ico">
+    <link rel="apple-touch-icon" href="<?= $basePath ?>/template/ABCBFAV.png">
+    <link rel="manifest" href="<?= $basePath ?>/manifest.json">
+    <script>
+    if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("<?= $basePath ?>/service-worker.js");
+    }
+    </script>
 
     <style>
         /* 🔹 Uitklapbaar submenu (Instellingen) */
