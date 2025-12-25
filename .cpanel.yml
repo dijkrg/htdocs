@@ -1,0 +1,30 @@
+---
+# cPanel Deployment Configuration
+# Documentation: https://docs.cpanel.net/knowledge-base/deployment-guide/
+
+version: 1.0
+
+# Deployment settings
+deployment:
+  tasks:
+    - export DEPLOY_ENV=production
+    - composer install --no-dev --optimize-autoloader
+    - php artisan migrate --force
+    - php artisan config:cache
+    - php artisan route:cache
+    - php artisan view:cache
+
+# Files to exclude from deployment
+exclude:
+  - node_modules
+  - vendor
+  - .env
+  - .git
+  - .gitignore
+  - tests
+  - storage/debugbar
+  - storage/framework/cache
+  - storage/framework/sessions
+  - storage/framework/testing
+  - storage/framework/views
+  - storage/logs

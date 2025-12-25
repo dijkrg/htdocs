@@ -291,7 +291,7 @@ $startY = $pdf->GetY();
 $klantBlok =
     trim((string)($wb['debiteurnummer'] ?? '') . ' - ' . (string)($wb['klantnaam'] ?? '')) . "\n" .
     (string)($wb['klant_adres'] ?? '-') . "\n" .
-    trim((string)($wb['klant_postcode'] ?? '') . ' ' . (string)($wb['klant_plaats'] ?? ''));
+    trim((string)($wb['klant_postcode'] ?? '') . ' ' . (string)($wb['klant_plaats'] ?? '');
 
 $werkadresBlok = '-';
 if (!empty($wb['wa_naam'])) {
