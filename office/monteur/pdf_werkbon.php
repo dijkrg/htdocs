@@ -1,12 +1,13 @@
 <?php
 declare(strict_types=1);
 
-ini_set('display_errors', '1');
-error_reporting(E_ALL);
-
 require_once __DIR__ . '/../includes/init.php';
 requireLogin();
 requireRole(['Monteur']);
+
+// Voor PDF generatie: disable display_errors en gebruik output buffering
+ini_set('display_errors', '0');
+error_reporting(E_ALL);
 
 require_once __DIR__ . '/../includes/tcpdf/tcpdf.php';
 
@@ -44,15 +45,18 @@ function safeFileName(string $s): string {
    Bedrijfsgegevens voor footer + logo
 -------------------------------------------------- */
 $bedrijfsnaam = 'ABCBrand Beveiliging B.V.';
-$logoRel = '/template/ABCBFAV.png';
+$logoRel = '/template/logo_abc.png'; // Gebruik logo_abc.png i.p.v. ABCBFAV.png (die heeft alpha channel problemen)
 
 $bg = $conn->query("SELECT bedrijfsnaam, logo_pad FROM bedrijfsgegevens LIMIT 1");
 if ($bg && ($row = $bg->fetch_assoc())) {
     if (!empty($row['bedrijfsnaam'])) $bedrijfsnaam = (string)$row['bedrijfsnaam'];
-    if (!empty($row['logo_pad']))     $logoRel = (string)$row['logo_pad'];
+    // Gebruik alleen logo_pad uit database als het NIET ABCBFAV.png is (alpha channel problemen)
+    if (!empty($row['logo_pad']) && strpos($row['logo_pad'], 'ABCBFAV.png') === false) {
+        $logoRel = (string)$row['logo_pad'];
+    }
 }
 // logo_pad kan beginnen met /template/... -> omzetten naar filesystem pad
-$logoPath = realpath(__DIR__ . '/..' . $logoRel);
+$logoPath = realpath(__DIR__ . '/..' . $logoRel) ?: '';
 
 /* --------------------------------------------------
    1) Werkbon + klant + werkadres + monteur naam
@@ -230,9 +234,15 @@ $kvRow = function(string $k, string $v) use ($pdf, $usableW) {
    Header: logo (groot) - geen lijn erboven/erdoor
 -------------------------------------------------- */
 if ($logoPath && is_file($logoPath)) {
-    // groter logo (pas breedte aan naar wens)
-    $pdf->Image($logoPath, $left, 10, 85, 0, '', '', '', false, 300);
-    $pdf->Ln(28); // ruimte onder logo
+    try {
+        // groter logo (pas breedte aan naar wens)
+        $pdf->Image($logoPath, $left, 10, 85, 0, '', '', '', false, 300);
+        $pdf->Ln(28); // ruimte onder logo
+    } catch (Exception $e) {
+        // Als logo niet geladen kan worden (bijv. PNG met alpha channel zonder GD/Imagick)
+        // Laat gewoon ruimte en ga verder
+        $pdf->Ln(8);
+    }
 } else {
     $pdf->Ln(8);
 }
@@ -291,7 +301,7 @@ $startY = $pdf->GetY();
 $klantBlok =
     trim((string)($wb['debiteurnummer'] ?? '') . ' - ' . (string)($wb['klantnaam'] ?? '')) . "\n" .
     (string)($wb['klant_adres'] ?? '-') . "\n" .
-    trim((string)($wb['klant_postcode'] ?? '') . ' ' . (string)($wb['klant_plaats'] ?? '');
+    trim((string)($wb['klant_postcode'] ?? '') . ' ' . (string)($wb['klant_plaats'] ?? ''));
 
 $werkadresBlok = '-';
 if (!empty($wb['wa_naam'])) {
@@ -434,15 +444,21 @@ $klantSignRel = (string)($wb['handtekening_klant'] ?? '');
 $klantSignPath = '';
 if ($klantSignRel !== '') {
     $try = realpath(__DIR__ . '/../' . ltrim($klantSignRel, '/'));
-    if ($try && is_file($try)) $klantSignPath = $try;
+    if ($try !== false && is_file($try)) $klantSignPath = $try;
 }
 
 if ($klantSignPath) {
     $x = $left;
     $y = $pdf->GetY() + 2;
     $pdf->Line($x, $y + 22, $x + $colW2, $y + 22);
-    $pdf->Image($klantSignPath, $x, $y, 60, 0);
-    $pdf->SetY($y + 26);
+    try {
+        $pdf->Image($klantSignPath, $x, $y, 60, 0);
+        $pdf->SetY($y + 26);
+    } catch (Exception $e) {
+        // Als handtekening niet geladen kan worden
+        $pdf->Cell($colW2, 16, '(handtekening kon niet worden geladen)', 0, 1);
+        $pdf->SetY($y + 26);
+    }
 } else {
     $pdf->Cell($colW2, 16, '(geen handtekening)', 0, 1);
     $x = $left;
