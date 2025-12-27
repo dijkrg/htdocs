@@ -1,5 +1,6 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/abcbrandbeveiliging/public_html/
-    - /bin/cp -R office/* $DEPLOYPATH
+    - export DEPLOYPATH=/home/abcbrandbeveiliging/public_html
+    - /bin/mkdir -p $DEPLOYPATH
+    - /bin/cp -R office/* $DEPLOYPATH/
