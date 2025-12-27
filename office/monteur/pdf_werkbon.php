@@ -232,20 +232,13 @@ $kvRow = function(string $k, string $v) use ($pdf, $usableW) {
 
 /* --------------------------------------------------
    Header: logo (groot) - geen lijn erboven/erdoor
+   LET OP: Logo uitgeschakeld wegens TCPDF alpha channel probleem
+   Server mist GD/Imagick extensie voor PNG met transparantie
 -------------------------------------------------- */
-if ($logoPath && is_file($logoPath)) {
-    try {
-        // groter logo (pas breedte aan naar wens)
-        $pdf->Image($logoPath, $left, 10, 85, 0, '', '', '', false, 300);
-        $pdf->Ln(28); // ruimte onder logo
-    } catch (Exception $e) {
-        // Als logo niet geladen kan worden (bijv. PNG met alpha channel zonder GD/Imagick)
-        // Laat gewoon ruimte en ga verder
-        $pdf->Ln(8);
-    }
-} else {
-    $pdf->Ln(8);
-}
+// Logo tijdelijk uitgeschakeld - server ondersteunt geen PNG met alpha channel
+// Om dit op te lossen: installeer GD of Imagick extensie op de server
+// Of converteer het logo naar JPG formaat (zonder transparantie)
+$pdf->Ln(8);
 
 /* --------------------------------------------------
    Werkbongegevens
@@ -279,18 +272,7 @@ $pdf->Ln(2);
 $sep();
 
 /* --------------------------------------------------
-   Omschrijving
--------------------------------------------------- */
-$hLabel('Omschrijving');
-$pdf->SetFont('helvetica','',10);
-$omschrijving = trim((string)($wb['omschrijving'] ?? ''));
-if ($omschrijving === '') $omschrijving = '-';
-$pdf->MultiCell(0, 6, $omschrijving, 0, 'L');
-$pdf->Ln(2);
-$sep();
-
-/* --------------------------------------------------
-   Klantgegevens + Werkadres naast elkaar (extra-veilig tegen overlap)
+   Klantgegevens + Werkadres naast elkaar
 -------------------------------------------------- */
 $gap  = 10;
 $colW = ($usableW - $gap) / 2;
@@ -319,22 +301,36 @@ $hWerk  = $pdf->getStringHeight($colW, $werkadresBlok);
 // + titelhoogte (7) + kleine marge (6)
 $blockH = max($hKlant, $hWerk) + 7 + 6;
 
-// LINKS
+// LINKS - Klantgegevens
 $pdf->SetXY($left, $startY);
 $pdf->SetFont('helvetica','B',12);
 $pdf->Cell($colW, 7, 'Klantgegevens', 0, 1, 'L');
+$pdf->SetX($left); // Zet X terug naar links voor MultiCell
 $pdf->SetFont('helvetica','',10);
 $pdf->MultiCell($colW, 5.5, $klantBlok, 0, 'L', false, 1);
 
-// RECHTS (exact dezelfde startY, eigen kolom)
-$pdf->SetXY($left + $colW + $gap, $startY);
+// RECHTS - Werkadres (exact dezelfde startY, eigen kolom)
+$rightX = $left + $colW + $gap;
+$pdf->SetXY($rightX, $startY);
 $pdf->SetFont('helvetica','B',12);
 $pdf->Cell($colW, 7, 'Werkadres', 0, 1, 'L');
+$pdf->SetX($rightX); // Zet X terug naar rechterkolom voor MultiCell
 $pdf->SetFont('helvetica','',10);
 $pdf->MultiCell($colW, 5.5, $werkadresBlok, 0, 'L', false, 1);
 
 // zet Y altijd onder beide blokken (nooit terugvallen)
 $pdf->SetY($startY + $blockH);
+$sep();
+
+/* --------------------------------------------------
+   Omschrijving
+-------------------------------------------------- */
+$hLabel('Omschrijving');
+$pdf->SetFont('helvetica','',10);
+$omschrijving = trim((string)($wb['omschrijving'] ?? ''));
+if ($omschrijving === '') $omschrijving = '-';
+$pdf->MultiCell(0, 6, $omschrijving, 0, 'L');
+$pdf->Ln(2);
 $sep();
 
 /* --------------------------------------------------
@@ -433,11 +429,16 @@ $hLabel('Handtekeningen');
 
 $signY = $pdf->GetY();
 $colW2 = ($usableW - $gap) / 2;
+$rightX = $left + $colW2 + $gap;
 
-// links: klant
+// Vaste Y-positie voor de lijnen (beide op dezelfde hoogte)
+$lineY = $signY + 35;
+
+// LINKS: Klant handtekening
 $pdf->SetXY($left, $signY);
 $pdf->SetFont('helvetica','B',10);
 $pdf->Cell($colW2, 6, 'Klant', 0, 1);
+$pdf->SetX($left);
 $pdf->SetFont('helvetica','',10);
 
 $klantSignRel = (string)($wb['handtekening_klant'] ?? '');
@@ -448,39 +449,34 @@ if ($klantSignRel !== '') {
 }
 
 if ($klantSignPath) {
-    $x = $left;
-    $y = $pdf->GetY() + 2;
-    $pdf->Line($x, $y + 22, $x + $colW2, $y + 22);
     try {
-        $pdf->Image($klantSignPath, $x, $y, 60, 0);
-        $pdf->SetY($y + 26);
+        $pdf->Image($klantSignPath, $left, $signY + 8, 60, 0);
     } catch (Exception $e) {
-        // Als handtekening niet geladen kan worden
-        $pdf->Cell($colW2, 16, '(handtekening kon niet worden geladen)', 0, 1);
-        $pdf->SetY($y + 26);
+        $pdf->Cell($colW2, 6, '(handtekening kon niet worden geladen)', 0, 1);
     }
 } else {
-    $pdf->Cell($colW2, 16, '(geen handtekening)', 0, 1);
-    $x = $left;
-    $y = $pdf->GetY();
-    $pdf->Line($x, $y + 10, $x + $colW2, $y + 10);
-    $pdf->Ln(14);
+    $pdf->Cell($colW2, 6, '(geen handtekening)', 0, 1);
 }
 
-// rechts: monteur
+// Lijn voor klant (op vaste hoogte)
+$pdf->Line($left, $lineY, $left + $colW2, $lineY);
+
+// RECHTS: Monteur handtekening
 $monteurNaam = trim((string)($wb['monteur_voornaam'] ?? '') . ' ' . (string)($wb['monteur_achternaam'] ?? ''));
 if ($monteurNaam === '') $monteurNaam = 'Monteur';
 
-$pdf->SetXY($left + $colW2 + $gap, $signY);
+$pdf->SetXY($rightX, $signY);
 $pdf->SetFont('helvetica','B',10);
 $pdf->Cell($colW2, 6, 'Monteur', 0, 1);
+$pdf->SetX($rightX);
 $pdf->SetFont('helvetica','',10);
 $pdf->Cell($colW2, 6, $monteurNaam, 0, 1);
 
-$x = $left + $colW2 + $gap;
-$y = $pdf->GetY() + 10;
-$pdf->Line($x, $y, $x + $colW2, $y);
-$pdf->SetY(max($pdf->GetY(), $signY + 40));
+// Lijn voor monteur (op dezelfde vaste hoogte)
+$pdf->Line($rightX, $lineY, $rightX + $colW2, $lineY);
+
+// Zet Y onder beide blokken
+$pdf->SetY($lineY + 5);
 
 /* --------------------------------------------------
    LANDSCAPE: Objecten op locatie (zonder foto, met kolomscheidingen)
