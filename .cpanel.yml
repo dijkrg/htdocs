@@ -2,4 +2,4 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/abcbrandbeveiliging/public_html/
-    - /usr/bin/rsync -a --delete --exclude=".git/" --exclude=".cpanel.yml" --exclude=".env" --exclude="config.php" --exclude=".claude/" --exclude="Backup/" --exclude="xampp/" --exclude="webalizer/" --exclude="dashboard/" office/ "$DEPLOYPATH"
+    - /bin/cp -R office/* $DEPLOYPATH
