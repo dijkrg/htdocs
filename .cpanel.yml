@@ -1,6 +1,6 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/abcbrandbeveiliging/office.abcbrandbeveiliging.nl
+    - export DEPLOYPATH=/home/abcbrand/office.abcbrandbeveiliging.nl
     - /bin/mkdir -p $DEPLOYPATH
     - /bin/cp -R office/* $DEPLOYPATH/
