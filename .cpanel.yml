@@ -2,10 +2,4 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/abcbrandbeveiliging/public_html/
-    - /bin/cp -R office $DEPLOYPATH
-    - /bin/cp -R dashboard $DEPLOYPATH
-    - /bin/cp -R img $DEPLOYPATH
-    - /bin/cp index.php $DEPLOYPATH
-    - /bin/cp phpinfo.php $DEPLOYPATH
-    - /bin/cp applications.html $DEPLOYPATH
-    - /bin/cp bitnami.css $DEPLOYPATH
+    - /usr/bin/rsync -a --delete --exclude=".git/" --exclude=".cpanel.yml" --exclude=".env" --exclude="config.php" ./ "$DEPLOYPATH"
