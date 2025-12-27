@@ -1,13 +1,10 @@
 self.addEventListener("install", (event) => {
     event.waitUntil(
-        caches.open("abcb-monteur-cache-v1").then((cache) => {
+        caches.open("abcb-monteur-cache-v2").then((cache) => {
             return cache.addAll([
                 "/monteur/monteur_dashboard.php",
-                "/monteur/template/monteur_base.css",
-                "/monteur/template/monteur_mobile.css",
                 "/template/style.css",
-                "/icons/icon-192.png",
-                "/icons/icon-512.png"
+                "/template/ABCBFAV.png"
             ]);
         })
     );

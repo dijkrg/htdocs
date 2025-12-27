@@ -6,7 +6,7 @@ ini_set('display_errors', '1');
 
 require_once __DIR__ . '/../includes/init.php';
 requireLogin();
-requireRole(['Monteur']);
+requireRole(['Admin', 'Manager', 'Monteur']);
 
 $monteur_id = (int)($_SESSION['user']['id'] ?? 0);
 $werkbon_id = (int)($_GET['werkbon_id'] ?? 0);

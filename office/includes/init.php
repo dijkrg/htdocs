@@ -79,7 +79,10 @@ function requireLogin(): void {
 
 function requireRole(array $roles): void {
     if (!isLoggedIn() || !in_array($_SESSION['user']['rol'], $roles, true)) {
-        setFlash("Geen toegang voor jouw rol.", "error");
+        $currentRole = $_SESSION['user']['rol'] ?? 'geen rol';
+        $allowedRoles = implode(', ', $roles);
+        $script = basename($_SERVER['PHP_SELF'] ?? 'unknown');
+        setFlash("Geen toegang voor jouw rol ($currentRole). Vereist: $allowedRoles. Script: $script", "error");
         header("Location: " . LOGIN_PATH);
         exit;
     }

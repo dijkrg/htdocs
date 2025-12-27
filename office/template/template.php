@@ -4,12 +4,8 @@ ini_set('display_errors', 1);
 
 require_once __DIR__ . '/../includes/init.php';
 
-// Basispad bepalen (voor submappen zoals /mail/, /systeembeheer/, /import/, /planboard/, /magazijn/, /leveranciers/)
-$basePath = rtrim(str_replace(
-    ['/mail', '/systeembeheer', '/import', '/planboard', '/magazijn', '/leveranciers'],
-    '',
-    dirname($_SERVER['SCRIPT_NAME'])
-), '/');
+// Basispad is leeg omdat DocumentRoot op /office staat
+$basePath = '';
 ?>
 <!DOCTYPE html>
 <html lang="nl">
